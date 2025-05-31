@@ -9,9 +9,10 @@ It acts as the entry point for transforming raw JSON input into well-typed comma
 ---
 
 ## Package Structure
-
+![Deployment Diagram](./docs/11-1.png)
 ---
 
 ## Module Structure
+![Package Structure](./docs/11-2.png)
 
 ---
