@@ -91,9 +91,9 @@ tearDown ctx = do
 --
 run :: SpecWith SpecContext
 run = do
-  describe "runApp" $ do
-    context "when AppData default" $ do
-      it "should be run" $ \ctx -> do 
+  describe "runWithAppData" $ do
+    context "when initialize" $ do
+      it "should be McpInitializeRequest" $ \ctx -> do 
         putStrLn "[INFO] EXECUTING THE FIRST TEST."
 
         let writeH = snd $ ctx^.handlePairSpecContext
@@ -103,7 +103,7 @@ run = do
             input  = """
                      {"jsonrpc":"2.0","id":1,"method":"initialize","params":{"capabilities":{"roots":{"listChanged":true}},"clientInfo":{"name":"Visual Studio Code","version":"1.99.2"},"protocolVersion":"2024-11-05"}}
                      """
-            --expect = DM.InitializeMcpRequest $ DM.RawJsonString "{\"val\":1000}"
+            expect = "2.0"            
             
         thId <- async $ SUT.runWithAppData appDat domDat
 
@@ -111,9 +111,9 @@ run = do
         hPutStr writeH "\n"
         hFlush  writeH
 
-        actual <- STM.atomically $ STM.readTQueue reqQ
-        putStrLn $ show actual
-        --actual `shouldBe` expect
+        (DM.McpInitializeRequest dat) <- STM.atomically $ STM.readTQueue reqQ
+        let actual = dat^.DM.jsonrpcMcpInitializeRequestData^.DM.jsonrpcJsonRpcRequest
+        actual `shouldBe` expect
 
         cancel thId
 

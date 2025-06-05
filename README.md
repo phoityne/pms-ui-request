@@ -9,10 +9,10 @@ It acts as the entry point for transforming raw JSON input into well-typed comma
 ---
 
 ## Package Structure
-![Package Structure](./docs/11-1.png)
+![Package Structure](https://raw.githubusercontent.com/phoityne/pms-ui-request/main/docs/11-1.png)
 ---
 
 ## Module Structure
-![Module Structure](./docs/11-2.png)
+![Module Structure](https://raw.githubusercontent.com/phoityne/pms-ui-request/main/docs/11-2.png)
 
 ---
