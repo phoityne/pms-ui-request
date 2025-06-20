@@ -59,7 +59,7 @@ library
     -- ghc-options: -Wall -fno-warn-unused-do-bind -fno-warn-name-shadowing -fno-warn-orphans -Wcompat -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints
 
     -- Import common warning flags.
-    ghc-options: -Wall
+    ghc-options: -Wall -threaded
 
     -- Modules exported by the library.
     exposed-modules:  PMS.UI.Request.DM.Type,
@@ -99,7 +99,7 @@ library
 
 test-suite pms-ui-request-test
     -- Import common warning flags.
-    ghc-options: -Wall
+    ghc-options: -Wall -threaded
 
     -- Base language which the package is written in.
     default-language: GHC2021
