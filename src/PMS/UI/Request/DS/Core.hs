@@ -103,11 +103,18 @@ enq req = do
 -- {"method":"notifications/initialized","jsonrpc":"2.0"} @(pms-ui-request-0.1.0.0-d3d6f94ec8cad8f11e6c82557d1e8927ebf7b47db964c68a0c1101f4c8759996:PMS.UI.Request.DS.Core src/PTY/UI/Request/Core.hs:47:8)
 -- {"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}} @(pms-ui-request-0.1.0.0-d3d6f94ec8cad8f11e6c82557d1e8927ebf7b47db964c68a0c1101f4c8759996:PMS.UI.Request.DS.Core src/PTY/UI/Request/Core.hs:47:8)
 -- {"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"df","arguments":{"arg1":""},"_meta":{"progressToken":"df68feeb-d5b0-4807-abac-ad2eb5d628bd"}}} @(pms-ui-request-0.1.0.0-d3d6f94ec8cad8f11e6c82557d1e8927ebf7b47db964c68a0c1101f4c8759996:PMS.UI.Request.DS.Core src/PTY/UI/Request/Core.hs:47:8)
+-- {"jsonrpc":"2.0","id":14,"method":"completion/complete","params":{"ref":{"type":"ref/prompt","name":"summarize_text"},"argument":{"name":"param2","value":"1200"},"context":{"arguments":{"param1":"abc"}}}}
+-- {"method":"notifications/cancelled","params":{"requestId":14},"jsonrpc":"2.0"}
+-- {"jsonrpc":"2.0","id":15,"method":"prompts/get","params":{"name":"summarize_text","arguments":{"param1":"abc","param2":"1200"}}}
 --
 decodeReq :: String -> Maybe DM.RawJsonByteString -> DM.JsonRpcRequest -> AppContext DM.McpRequest
 decodeReq "initialize" (Just (DM.RawJsonByteString rawJson)) req = DM.McpInitializeRequest . DM.McpInitializeRequestData req <$> (liftEither (eitherDecode rawJson))
-decodeReq "notifications/initialized" Nothing req = pure . DM.McpInitializedNotification . DM.McpInitializedNotificationData $ req
 decodeReq "tools/list" _ req = pure . DM.McpToolsListRequest . DM.McpToolsListRequestData $ req
 decodeReq "tools/call" (Just (DM.RawJsonByteString rawJson)) req = DM.McpToolsCallRequest . DM.McpToolsCallRequestData req <$> (liftEither (eitherDecode rawJson))
+decodeReq "prompts/list" _ req = pure . DM.McpPromptsListRequest . DM.McpPromptsListRequestData $ req
+decodeReq "notifications/initialized" Nothing req = pure . DM.McpInitializedNotification . DM.McpInitializedNotificationData $ req
+decodeReq "notifications/cancelled" (Just (DM.RawJsonByteString rawJson)) req = DM.McpCancelledNotification . DM.McpCancelledNotificationData req <$> (liftEither (eitherDecode rawJson))
+decodeReq "completion/complete" (Just (DM.RawJsonByteString rawJson)) req = DM.McpCompletionCompleteRequest . DM.McpCompletionCompleteRequestData req <$> (liftEither (eitherDecode rawJson))
+decodeReq "prompts/get" (Just (DM.RawJsonByteString rawJson)) req = DM.McpPromptsGetRequest . DM.McpPromptsGetRequestData req <$> (liftEither (eitherDecode rawJson))
 decodeReq _ _ req = throwError $ "unsupported method: " ++ show req
 
