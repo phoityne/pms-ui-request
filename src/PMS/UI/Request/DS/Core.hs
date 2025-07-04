@@ -112,9 +112,12 @@ decodeReq "initialize" (Just (DM.RawJsonByteString rawJson)) req = DM.McpInitial
 decodeReq "tools/list" _ req = pure . DM.McpToolsListRequest . DM.McpToolsListRequestData $ req
 decodeReq "tools/call" (Just (DM.RawJsonByteString rawJson)) req = DM.McpToolsCallRequest . DM.McpToolsCallRequestData req <$> (liftEither (eitherDecode rawJson))
 decodeReq "prompts/list" _ req = pure . DM.McpPromptsListRequest . DM.McpPromptsListRequestData $ req
+decodeReq "prompts/get" (Just (DM.RawJsonByteString rawJson)) req = DM.McpPromptsGetRequest . DM.McpPromptsGetRequestData req <$> (liftEither (eitherDecode rawJson))
+decodeReq "resources/templates/list" _ req = pure . DM.McpResourcesTemplatesListRequest . DM.McpResourcesTemplatesListRequestData $ req
+decodeReq "resources/list" _ req = pure . DM.McpResourcesListRequest . DM.McpResourcesListRequestData $ req
+decodeReq "resources/read" (Just (DM.RawJsonByteString rawJson)) req = DM.McpResourcesReadRequest . DM.McpResourcesReadRequestData req <$> (liftEither (eitherDecode rawJson))
 decodeReq "notifications/initialized" Nothing req = pure . DM.McpInitializedNotification . DM.McpInitializedNotificationData $ req
 decodeReq "notifications/cancelled" (Just (DM.RawJsonByteString rawJson)) req = DM.McpCancelledNotification . DM.McpCancelledNotificationData req <$> (liftEither (eitherDecode rawJson))
 decodeReq "completion/complete" (Just (DM.RawJsonByteString rawJson)) req = DM.McpCompletionCompleteRequest . DM.McpCompletionCompleteRequestData req <$> (liftEither (eitherDecode rawJson))
-decodeReq "prompts/get" (Just (DM.RawJsonByteString rawJson)) req = DM.McpPromptsGetRequest . DM.McpPromptsGetRequestData req <$> (liftEither (eitherDecode rawJson))
 decodeReq _ _ req = throwError $ "unsupported method: " ++ show req
 
