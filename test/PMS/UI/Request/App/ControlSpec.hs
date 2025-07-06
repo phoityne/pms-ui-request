@@ -1,6 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE MultilineStrings #-}
+-- {-# LANGUAGE MultilineStrings #-}
 
 module PMS.UI.Request.App.ControlSpec (spec) where
 
@@ -100,9 +100,7 @@ run = do
             domDat = ctx^.domainDataSpecContext
             appDat = ctx^.appDataSpecContext
             reqQ   = domDat^.DM.requestQueueDomainData
-            input  = """
-                     {"jsonrpc":"2.0","id":1,"method":"initialize","params":{"capabilities":{"roots":{"listChanged":true}},"clientInfo":{"name":"Visual Studio Code","version":"1.99.2"},"protocolVersion":"2024-11-05"}}
-                     """
+            input  = "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"initialize\",\"params\":{\"capabilities\":{\"roots\":{\"listChanged\":true}},\"clientInfo\":{\"name\":\"Visual Studio Code\",\"version\":\"1.99.2\"},\"protocolVersion\":\"2024-11-05\"}}"
             expect = "2.0"            
             
         thId <- async $ SUT.runWithAppData appDat domDat
