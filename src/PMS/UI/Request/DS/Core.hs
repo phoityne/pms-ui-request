@@ -13,7 +13,6 @@ import Control.Lens
 import Control.Monad.Reader
 import qualified Control.Concurrent.STM as STM
 import qualified Data.Text as T
---import Text.Parsec
 import Data.Aeson
 import Control.Monad.Except
 
