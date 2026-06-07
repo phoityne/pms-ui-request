@@ -1,5 +1,13 @@
 # Revision history for pms-ui-request
 
+## 0.0.8.0 -- 2026-06-15
+
+* Added pms-infra-agent-server: TCP server listen/accept functionality for AI agents.
+
+## 0.0.7.0 -- 2026-05-28
+
+* Fixed notifications/initialized parser to accept params field regardless of presence (MCP spec compliance for antigravity2 client).
+
 ## 0.0.6.0 -- 2025-07-27
 
 * Fixed resources templates.
